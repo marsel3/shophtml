@@ -24,7 +24,8 @@
       padding: 10px;
       background-color: #fff;
       text-align: center;
-      width: 100%;
+      width: calc(50% - 20px);
+      margin-bottom: 20px;
     }
 
     .product-card img {
@@ -37,12 +38,28 @@
       margin-top: 10px;
     }
 
+    .cart-button {
+      display: block;
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      float: right;
+    }
+
     .cart {
       border: 1px solid #ccc;
       padding: 20px;
       background-color: #fff;
-      margin-top: 20px;
       width: 100%;
+      position: fixed;
+      top: 0;
+      right: 0;
+      display: none;
+      max-height: 80%;
+      overflow-y: auto;
     }
 
     .cart h2 {
@@ -62,21 +79,19 @@
       padding: 10px 0;
     }
 
-    .view-products-btn,
     .checkout-btn {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
       padding: 5px 10px;
-      background-color: #007bff;
+      background-color: #dc3545;
       color: #fff;
       border: none;
       cursor: pointer;
-      width: 100%;
     }
 
-    .checkout-btn {
-      background-color: #dc3545;
-      margin-top: 15px;
+    .total-price {
+      margin-top: 10px;
+      text-align: right;
     }
 
     .cart-buttons {
@@ -88,6 +103,7 @@
   </style>
 </head>
 <body>
+  <button class="cart-button">Cart</button>
   <div class="product-list">
     <div class="product-card">
       <img src="1.jpg" alt="Product 1">
@@ -102,19 +118,7 @@
       <p class="product-price">$50</p>
       <button class="add-to-cart-btn">Add to Cart</button>
     </div>
-    <div class="product-card">
-      <img src="1.jpg" alt="Product 3">
-      <p class="product-title">Product 3</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
 
-    <div class="product-card">
-      <img src="1.jpg" alt="Product 4">
-      <p class="product-title">Product 4</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
         <div class="product-card">
       <img src="1.jpg" alt="Product 5">
       <p class="product-title">Product 5</p>
@@ -128,81 +132,104 @@
       <p class="product-price">$50</p>
       <button class="add-to-cart-btn">Add to Cart</button>
     </div>
-    <!-- Добавьте аналогичные блоки для остальных 4 товаров -->
 
+        <div class="product-card">
+      <img src="1.jpg" alt="Product 3">
+      <p class="product-title">Product 3</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="1.jpg" alt="Product 4">
+      <p class="product-title">Product 4</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+    <!-- Добавьте аналогичные блоки для остальных товаров -->
   </div>
 
-  <div class="cart" style="display: none;">
+  <div class="cart">
     <h2>Your Cart</h2>
     <ul class="cart-items">
       <!-- Элементы корзины будут добавляться динамически через JavaScript -->
     </ul>
+    <p class="total-price">Total: $0</p>
     <div class="cart-buttons">
       <button class="view-products-btn">Back to Products</button>
       <button class="checkout-btn">Checkout</button>
     </div>
   </div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
-        tg.expand(); //расширяем на все окно
-            
-        const products = document.querySelectorAll('.product-card');
-        const cartItems = document.querySelector('.cart-items');
-        const cart = document.querySelector('.cart');
-        const viewProductsBtn = document.querySelector('.view-products-btn');
-        const checkoutBtn = document.querySelector('.checkout-btn');
-    
-        const cartContents = {};
-    
-        products.forEach(product => {
-          const addToCartBtn = product.querySelector('.add-to-cart-btn');
-          const productName = product.querySelector('.product-title').textContent;
-          const productPrice = product.querySelector('.product-price').textContent;
-    
-          addToCartBtn.addEventListener('click', () => {
-            if (!cartContents[productName]) {
-              cartContents[productName] = {
-                price: productPrice,
-                quantity: 1
-              };
-            } else {
-              cartContents[productName].quantity++;
-            }
-    
-            updateCart();
-    
-            cart.style.display = 'block';
-          });
-        });
-    
-        function updateCart() {
-          cartItems.innerHTML = '';
-          for (const item in cartContents) {
-            const cartItem = document.createElement('li');
-            cartItem.innerHTML = `${item} - ${cartContents[item].price} x ${cartContents[item].quantity} <button class="remove-from-cart">Remove</button>`;
-    
-            const removeBtn = cartItem.querySelector('.remove-from-cart');
-            removeBtn.addEventListener('click', () => {
-              delete cartContents[item];
-              updateCart();
-            });
-    
-            cartItems.appendChild(cartItem);
-          }
+
+  <script>
+    const products = document.querySelectorAll('.product-card');
+    const cartItems = document.querySelector('.cart-items');
+    const cart = document.querySelector('.cart');
+    const totalPrice = document.querySelector('.total-price');
+    const viewProductsBtn = document.querySelector('.view-products-btn');
+    const checkoutBtn = document.querySelector('.checkout-btn');
+    const cartButton = document.querySelector('.cart-button');
+
+    const cartContents = {};
+
+    products.forEach(product => {
+      const addToCartBtn = product.querySelector('.add-to-cart-btn');
+      const productName = product.querySelector('.product-title').textContent;
+      const productPrice = product.querySelector('.product-price').textContent;
+
+      addToCartBtn.addEventListener('click', () => {
+        if (!cartContents[productName]) {
+          cartContents[productName] = {
+            price: parseFloat(productPrice.replace('$', '')),
+            quantity: 1
+          };
+        } else {
+          cartContents[productName].quantity++;
         }
-    
-        viewProductsBtn.addEventListener('click', () => {
-          cart.style.display = 'none';
-        });
-    
-        checkoutBtn.addEventListener('click', () => {
-          let total = 0;
-          for (const item in cartContents) {
-            total += parseFloat(cartContents[item].price.replace('$', '')) * cartContents[item].quantity;
+
+        updateCart();
+
+        cart.style.display = 'block';
+      });
+    });
+
+    function updateCart() {
+      cartItems.innerHTML = '';
+      let total = 0;
+      for (const item in cartContents) {
+        const cartItem = document.createElement('li');
+        cartItem.innerHTML = `${item} - $${cartContents[item].price} x ${cartContents[item].quantity} <button class="remove-from-cart">Remove</button>`;
+
+        const removeBtn = cartItem.querySelector('.remove-from-cart');
+        removeBtn.addEventListener('click', () => {
+          cartContents[item].quantity--;
+          if (cartContents[item].quantity <= 0) {
+            delete cartContents[item];
           }
-          alert(`Total: $${total.toFixed(2)}`);
+          updateCart();
         });
-    </script>
+
+        cartItems.appendChild(cartItem);
+        total += cartContents[item].price * cartContents[item].quantity;
+      }
+      totalPrice.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    viewProductsBtn.addEventListener('click', () => {
+      cart.style.display = 'none';
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      let total = 0;
+      for (const item in cartContents) {
+        total += cartContents[item].price * cartContents[item].quantity;
+      }
+      alert(`Total: $${total.toFixed(2)}`);
+    });
+
+    cartButton.addEventListener('click', () => {
+      cart.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
