@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+      text-align: center;
+      width: 100%;
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .product-price {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .cart {
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #fff;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .cart h2 {
+      font-size: 18px;
+    }
+
+    .cart-items {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cart-items li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .view-products-btn,
+    .checkout-btn {
+      display: block;
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .checkout-btn {
+      background-color: #dc3545;
+      margin-top: 15px;
+    }
+
+    .cart-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-list">
+    <div class="product-card">
+      <img src="1.jpg" alt="Product 1">
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+    <!-- Добавьте аналогичные блоки для остальных 6 товаров -->
+  </div>
+
+  <div class="cart" style="display: none;">
+    <h2>Your Cart</h2>
+    <ul class="cart-items">
+      <!-- Элементы корзины будут добавляться динамически через JavaScript -->
+    </ul>
+    <div class="cart-buttons">
+      <button class="view-products-btn">Back to Products</button>
+      <button class="checkout-btn">Checkout</button>
+    </div>
+  </div>
+
+  <script>
+    const products = document.querySelectorAll('.product-card');
+    const cartItems = document.querySelector('.cart-items');
+    const cart = document.querySelector('.cart');
+    const viewProductsBtn = document.querySelector('.view-products-btn');
+    const checkoutBtn = document.querySelector('.checkout-btn');
+
+    products.forEach(product => {
+      const addToCartBtn = product.querySelector('.add-to-cart-btn');
+      addToCartBtn.addEventListener('click', () => {
+        const productName = product.querySelector('.product-price').textContent;
+        const cartItem = document.createElement('li');
+        cartItem.innerHTML = `${productName} <button class="remove-from-cart">Remove</button>`;
+        cartItems.appendChild(cartItem);
+
+        const removeBtn = cartItem.querySelector('.remove-from-cart');
+        removeBtn.addEventListener('click', () => {
+          cartItems.removeChild(cartItem);
+        });
+
+        cart.style.display = 'block';
+      });
+    });
+
+    viewProductsBtn.addEventListener('click', () => {
+      cart.style.display = 'none';
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      const cartContents = Array.from(cartItems.children).map(item => item.textContent).join('\n');
+      alert(`Items in your cart:\n${cartContents}`);
+    });
+  </script>
+</body>
+</html>
