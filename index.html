@@ -226,9 +226,8 @@
         let total = 0;
         for (const item in cartContents) {
           total += cartContents[item].price * cartContents[item].quantity;
-        }
-        alert(`Total: $${total.toFixed(2)}`);
-
+          }
+          alert(`Total: $${total.toFixed(2)}`);
           tg.sendData(JSON.stringify(cartContents));
           tg.close();
       });
