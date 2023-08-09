@@ -160,76 +160,82 @@
       <button class="checkout-btn">Checkout</button>
     </div>
   </div>
+      <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+        tg.expand(); //расширяем на все окно
 
-  <script>
-    const products = document.querySelectorAll('.product-card');
-    const cartItems = document.querySelector('.cart-items');
-    const cart = document.querySelector('.cart');
-    const totalPrice = document.querySelector('.total-price');
-    const viewProductsBtn = document.querySelector('.view-products-btn');
-    const checkoutBtn = document.querySelector('.checkout-btn');
-    const cartButton = document.querySelector('.cart-button');
 
-    const cartContents = {};
+      const products = document.querySelectorAll('.product-card');
+      const cartItems = document.querySelector('.cart-items');
+      const cart = document.querySelector('.cart');
+      const totalPrice = document.querySelector('.total-price');
+      const viewProductsBtn = document.querySelector('.view-products-btn');
+      const checkoutBtn = document.querySelector('.checkout-btn');
+      const cartButton = document.querySelector('.cart-button');
 
-    products.forEach(product => {
-      const addToCartBtn = product.querySelector('.add-to-cart-btn');
-      const productName = product.querySelector('.product-title').textContent;
-      const productPrice = product.querySelector('.product-price').textContent;
+      const cartContents = {};
 
-      addToCartBtn.addEventListener('click', () => {
-        if (!cartContents[productName]) {
-          cartContents[productName] = {
-            price: parseFloat(productPrice.replace('$', '')),
-            quantity: 1
-          };
-        } else {
-          cartContents[productName].quantity++;
+      products.forEach(product => {
+        const addToCartBtn = product.querySelector('.add-to-cart-btn');
+        const productName = product.querySelector('.product-title').textContent;
+        const productPrice = product.querySelector('.product-price').textContent;
+
+        addToCartBtn.addEventListener('click', () => {
+          if (!cartContents[productName]) {
+            cartContents[productName] = {
+              price: parseFloat(productPrice.replace('$', '')),
+              quantity: 1
+            };
+          } else {
+            cartContents[productName].quantity++;
+          }
+
+          updateCart();
+
+          cart.style.display = 'block';
+        });
+      });
+
+      function updateCart() {
+        cartItems.innerHTML = '';
+        let total = 0;
+        for (const item in cartContents) {
+          const cartItem = document.createElement('li');
+          cartItem.innerHTML = `${item} - $${cartContents[item].price} x ${cartContents[item].quantity} <button class="remove-from-cart">Remove</button>`;
+
+          const removeBtn = cartItem.querySelector('.remove-from-cart');
+          removeBtn.addEventListener('click', () => {
+            cartContents[item].quantity--;
+            if (cartContents[item].quantity <= 0) {
+              delete cartContents[item];
+            }
+            updateCart();
+          });
+
+          cartItems.appendChild(cartItem);
+          total += cartContents[item].price * cartContents[item].quantity;
         }
+        totalPrice.textContent = `Total: $${total.toFixed(2)}`;
+      }
 
-        updateCart();
+      viewProductsBtn.addEventListener('click', () => {
+        cart.style.display = 'none';
+      });
 
+      checkoutBtn.addEventListener('click', () => {
+        let total = 0;
+        for (const item in cartContents) {
+          total += cartContents[item].price * cartContents[item].quantity;
+        }
+        alert(`Total: $${total.toFixed(2)}`);
+
+          tg.sendData(JSON.stringify(cartContents));
+          tg.close();
+      });
+
+      cartButton.addEventListener('click', () => {
         cart.style.display = 'block';
       });
-    });
-
-    function updateCart() {
-      cartItems.innerHTML = '';
-      let total = 0;
-      for (const item in cartContents) {
-        const cartItem = document.createElement('li');
-        cartItem.innerHTML = `${item} - $${cartContents[item].price} x ${cartContents[item].quantity} <button class="remove-from-cart">Remove</button>`;
-
-        const removeBtn = cartItem.querySelector('.remove-from-cart');
-        removeBtn.addEventListener('click', () => {
-          cartContents[item].quantity--;
-          if (cartContents[item].quantity <= 0) {
-            delete cartContents[item];
-          }
-          updateCart();
-        });
-
-        cartItems.appendChild(cartItem);
-        total += cartContents[item].price * cartContents[item].quantity;
-      }
-      totalPrice.textContent = `Total: $${total.toFixed(2)}`;
-    }
-
-    viewProductsBtn.addEventListener('click', () => {
-      cart.style.display = 'none';
-    });
-
-    checkoutBtn.addEventListener('click', () => {
-      let total = 0;
-      for (const item in cartContents) {
-        total += cartContents[item].price * cartContents[item].quantity;
-      }
-      alert(`Total: $${total.toFixed(2)}`);
-    });
-
-    cartButton.addEventListener('click', () => {
-      cart.style.display = 'block';
-    });
-  </script>
+    </script>
 </body>
 </html>
