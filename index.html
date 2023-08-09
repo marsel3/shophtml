@@ -91,10 +91,45 @@
   <div class="product-list">
     <div class="product-card">
       <img src="1.jpg" alt="Product 1">
+      <p class="product-title">Product 1</p>
       <p class="product-price">$50</p>
       <button class="add-to-cart-btn">Add to Cart</button>
     </div>
-    <!-- Добавьте аналогичные блоки для остальных 6 товаров -->
+
+    <div class="product-card">
+      <img src="1.jpg" alt="Product 2">
+      <p class="product-title">Product 2</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="1.jpg" alt="Product 3">
+      <p class="product-title">Product 3</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="1.jpg" alt="Product 4">
+      <p class="product-title">Product 4</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+        <div class="product-card">
+      <img src="1.jpg" alt="Product 5">
+      <p class="product-title">Product 5</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="1.jpg" alt="Product 6">
+      <p class="product-title">Product 6</p>
+      <p class="product-price">$50</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+    <!-- Добавьте аналогичные блоки для остальных 4 товаров -->
+
   </div>
 
   <div class="cart" style="display: none;">
@@ -107,7 +142,6 @@
       <button class="checkout-btn">Checkout</button>
     </div>
   </div>
-
   <script>
     const products = document.querySelectorAll('.product-card');
     const cartItems = document.querySelector('.cart-items');
@@ -115,30 +149,55 @@
     const viewProductsBtn = document.querySelector('.view-products-btn');
     const checkoutBtn = document.querySelector('.checkout-btn');
 
+    const cartContents = {};
+
     products.forEach(product => {
       const addToCartBtn = product.querySelector('.add-to-cart-btn');
-      addToCartBtn.addEventListener('click', () => {
-        const productName = product.querySelector('.product-price').textContent;
-        const cartItem = document.createElement('li');
-        cartItem.innerHTML = `${productName} <button class="remove-from-cart">Remove</button>`;
-        cartItems.appendChild(cartItem);
+      const productName = product.querySelector('.product-title').textContent;
+      const productPrice = product.querySelector('.product-price').textContent;
 
-        const removeBtn = cartItem.querySelector('.remove-from-cart');
-        removeBtn.addEventListener('click', () => {
-          cartItems.removeChild(cartItem);
-        });
+      addToCartBtn.addEventListener('click', () => {
+        if (!cartContents[productName]) {
+          cartContents[productName] = {
+            price: productPrice,
+            quantity: 1
+          };
+        } else {
+          cartContents[productName].quantity++;
+        }
+
+        updateCart();
 
         cart.style.display = 'block';
       });
     });
+
+    function updateCart() {
+      cartItems.innerHTML = '';
+      for (const item in cartContents) {
+        const cartItem = document.createElement('li');
+        cartItem.innerHTML = `${item} - ${cartContents[item].price} x ${cartContents[item].quantity} <button class="remove-from-cart">Remove</button>`;
+
+        const removeBtn = cartItem.querySelector('.remove-from-cart');
+        removeBtn.addEventListener('click', () => {
+          delete cartContents[item];
+          updateCart();
+        });
+
+        cartItems.appendChild(cartItem);
+      }
+    }
 
     viewProductsBtn.addEventListener('click', () => {
       cart.style.display = 'none';
     });
 
     checkoutBtn.addEventListener('click', () => {
-      const cartContents = Array.from(cartItems.children).map(item => item.textContent).join('\n');
-      alert(`Items in your cart:\n${cartContents}`);
+      let total = 0;
+      for (const item in cartContents) {
+        total += parseFloat(cartContents[item].price.replace('$', '')) * cartContents[item].quantity;
+      }
+      alert(`Total: $${total.toFixed(2)}`);
     });
   </script>
 </body>
