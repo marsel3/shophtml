@@ -1,240 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Online Store</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f0f0f0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
 
-    .product-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      padding: 20px;
-    }
+  .product {
+    width: 45%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center; 
+  }
 
-    .product-card {
-      border: 1px solid #ccc;
-      padding: 10px;
-      background-color: #fff;
-      text-align: center;
-      width: calc(50% - 20px);
-      margin-bottom: 20px;
-    }
+  .product img {
+    max-width: 100%;
+    height: auto;
+  }
 
-    .product-card img {
-      max-width: 100%;
-      height: auto;
-    }
+  .product-title {
+    font-weight: bold;
+    margin-top: 8px;
+  }
 
-    .product-price {
-      font-weight: bold;
-      margin-top: 10px;
-    }
+  .product-price {
+    color: #e74c3c;
+    margin-top: 4px;
+  }
+</style>
 
-    .cart-button {
-      display: block;
-      margin: 10px;
-      padding: 5px 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      float: right;
-    }
-
-    .cart {
-      border: 1px solid #ccc;
-      padding: 20px;
-      background-color: #fff;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      right: 0;
-      display: none;
-      max-height: 80%;
-      overflow-y: auto;
-    }
-
-    .cart h2 {
-      font-size: 18px;
-    }
-
-    .cart-items {
-      list-style: none;
-      padding: 0;
-    }
-
-    .cart-items li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding: 10px 0;
-    }
-
-    .checkout-btn {
-      display: block;
-      margin-top: 15px;
-      padding: 5px 10px;
-      background-color: #dc3545;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-
-    .total-price {
-      margin-top: 10px;
-      text-align: right;
-    }
-
-    .cart-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-    }
-  </style>
+<title>Мобильный магазин</title>
 </head>
 <body>
-  <button class="cart-button">Cart</button>
-  <div class="product-list">
-    <div class="product-card">
-      <img src="1.jpg" alt="Product 1">
-      <p class="product-title">Product 1</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
-
-    <div class="product-card">
-      <img src="1.jpg" alt="Product 2">
-      <p class="product-title">Product 2</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
-
-        <div class="product-card">
-      <img src="1.jpg" alt="Product 5">
-      <p class="product-title">Product 5</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
-
-    <div class="product-card">
-      <img src="1.jpg" alt="Product 6">
-      <p class="product-title">Product 6</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
-
-        <div class="product-card">
-      <img src="1.jpg" alt="Product 3">
-      <p class="product-title">Product 3</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
-
-    <div class="product-card">
-      <img src="1.jpg" alt="Product 4">
-      <p class="product-title">Product 4</p>
-      <p class="product-price">$50</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <!-- Добавьте аналогичные блоки для остальных товаров -->
+  <div class="product" id="product1">
+    <img src="1.jpg" alt="Товар 1">
+    <div class="product-title">Товар 1</div>
+    <div class="product-price">$10.00</div>
   </div>
 
-  <div class="cart">
-    <h2>Your Cart</h2>
-    <ul class="cart-items">
-      <!-- Элементы корзины будут добавляться динамически через JavaScript -->
-    </ul>
-    <p class="total-price">Total: $0</p>
-    <div class="cart-buttons">
-      <button class="view-products-btn">Back to Products</button>
-      <button class="checkout-btn">Checkout</button>
-    </div>
+  <div class="product" id="product2">
+    <img src="1.jpg" alt="Товар 2">
+    <div class="product-title">Товар 2</div>
+    <div class="product-price">$15.00</div>
   </div>
-      <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
-        tg.expand(); //расширяем на все окно
 
+  <div class="product" id="product3">
+    <img src="1.jpg" alt="Товар 3">
+    <div class="product-title">Товар 3</div>
+    <div class="product-price">$20.00</div>
+  </div>
 
-      const products = document.querySelectorAll('.product-card');
-      const cartItems = document.querySelector('.cart-items');
-      const cart = document.querySelector('.cart');
-      const totalPrice = document.querySelector('.total-price');
-      const viewProductsBtn = document.querySelector('.view-products-btn');
-      const checkoutBtn = document.querySelector('.checkout-btn');
-      const cartButton = document.querySelector('.cart-button');
+  <div class="product" id="product4">
+    <img src="1.jpg" alt="Товар 4">
+    <div class="product-title">Товар 4</div>
+    <div class="product-price">$25.00</div>
+  </div>
 
-      const cartContents = {};
+  <div class="product" id="product5">
+    <img src="1.jpg" alt="Товар 5">
+    <div class="product-title">Товар 5</div>
+    <div class="product-price">$30.00</div>
+  </div>
 
-      products.forEach(product => {
-        const addToCartBtn = product.querySelector('.add-to-cart-btn');
-        const productName = product.querySelector('.product-title').textContent;
-        const productPrice = product.querySelector('.product-price').textContent;
-
-        addToCartBtn.addEventListener('click', () => {
-          if (!cartContents[productName]) {
-            cartContents[productName] = {
-              price: parseFloat(productPrice.replace('$', '')),
-              quantity: 1
-            };
-          } else {
-            cartContents[productName].quantity++;
-          }
-
-          updateCart();
-
-          cart.style.display = 'block';
-        });
-      });
-
-      function updateCart() {
-        cartItems.innerHTML = '';
-        let total = 0;
-        for (const item in cartContents) {
-          const cartItem = document.createElement('li');
-          cartItem.innerHTML = `${item} - $${cartContents[item].price} x ${cartContents[item].quantity} <button class="remove-from-cart">Remove</button>`;
-
-          const removeBtn = cartItem.querySelector('.remove-from-cart');
-          removeBtn.addEventListener('click', () => {
-            cartContents[item].quantity--;
-            if (cartContents[item].quantity <= 0) {
-              delete cartContents[item];
-            }
-            updateCart();
-          });
-
-          cartItems.appendChild(cartItem);
-          total += cartContents[item].price * cartContents[item].quantity;
-        }
-        totalPrice.textContent = `Total: $${total.toFixed(2)}`;
-      }
-
-      viewProductsBtn.addEventListener('click', () => {
-        cart.style.display = 'none';
-      });
-
-      checkoutBtn.addEventListener('click', () => {
-        let total = 0;
-        for (const item in cartContents) {
-          total += cartContents[item].price * cartContents[item].quantity;
-          }
-          alert(`Total: $${total.toFixed(2)}`);
-          tg.sendData(JSON.stringify(cartContents));
-          tg.close();
-      });
-
-      cartButton.addEventListener('click', () => {
-        cart.style.display = 'block';
-      });
-    </script>
+  <div class="product" id="product6">
+    <img src="1.jpg" alt="Товар 6">
+    <div class="product-title">Товар 6</div>
+    <div class="product-price">$35.00</div>
+  </div>
 </body>
 </html>
