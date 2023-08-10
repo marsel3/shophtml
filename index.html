@@ -127,7 +127,7 @@
 <body>
   <div class="container">
     <div class="item" id="product1">
-      <img src="1.jpg" alt="Товар 2"> 
+      <img src="1.jpg" alt="Товар 2">
       <h3 class="product-title">Товар 1</h3>
       <p>Цена: $<span class="product-price">10</span></p>
       <div class="quantity-controls" style="display: none;">
@@ -219,7 +219,7 @@
     const quantityControls = item.querySelector('.quantity-controls');
     const itemId = item.id;
     const itemName = item.querySelector('product-title').innerText;
-
+    const itemPrice = item.querySelector('product-price').innerText;
     let quantity = 0;
 
 
@@ -255,7 +255,7 @@
         cart[itemId] = {
           name: itemName,
           quantity: quantity,
-          price: it
+          price: itemPrice
         };
       } else {
         buyButton.style.display = 'inline';
