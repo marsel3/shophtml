@@ -203,25 +203,25 @@
   </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
-    tg.expand(); //расширяем на все окно
+    let tg = window.Telegram.WebApp;
+    tg.expand();
 
     const checkoutButton = document.getElementById('checkout-button');
     const items = document.querySelectorAll('.item');
-    const cart = {}; // Объект для хранения состава корзины
+    const cart = {};
 
     items.forEach(item => {
-    const buyButton = item.querySelector('.buy-button');
-    const plusButton = item.querySelector('.plus-button');
-    const minusButton = item.querySelector('.minus-button');
-    const quantityInput = item.querySelector('.quantity-input');
-    const quantityControls = item.querySelector('.quantity-controls');
-    const itemId = item.id;
-    const itemName = item.querySelector('product-title').innerText;
-    const itemPrice = item.querySelector('product-price').innerText;
-    let quantity = 0;
-
+      const buyButton = item.querySelector('.buy-button');
+      const plusButton = item.querySelector('.plus-button');
+      const minusButton = item.querySelector('.minus-button');
+      const quantityInput = item.querySelector('.quantity-input');
+      const quantityControls = item.querySelector('.quantity-controls');
+      const itemId = item.id;
+      const itemName = item.querySelector('.product-title').innerText; // Исправленный селектор
+      const itemPrice = item.querySelector('.product-price').innerText; // Исправленный селектор
+      let quantity = 0;
 
       plusButton.addEventListener('click', () => {
         quantity++;
@@ -248,46 +248,44 @@
         updateButtonsVisibility();
       });
 
-    const updateButtonsVisibility = () => {
-      if (quantity > 0) {
-        buyButton.style.display = 'none';
-        quantityControls.style.display = 'flex';
-        cart[itemId] = {
-          name: itemName,
-          quantity: quantity,
-          price: itemPrice
-        };
-      } else {
-        buyButton.style.display = 'inline';
-        quantityControls.style.display = 'none';
-        delete cart[itemId];
+      const updateButtonsVisibility = () => {
+        if (quantity > 0) {
+          buyButton.style.display = 'none';
+          quantityControls.style.display = 'flex';
+          cart[itemId] = {
+            name: itemName,
+            quantity: quantity,
+            price: itemPrice
+          };
+        } else {
+          buyButton.style.display = 'inline';
+          quantityControls.style.display = 'none';
+          delete cart[itemId];
+        }
+      };
+      updateButtonsVisibility();
+    });
+
+    checkoutButton.addEventListener('click', () => {
+      const cartItems = [];
+
+      for (const productId in cart) {
+        const product = cart[productId];
+        cartItems.push({
+          id: productId,
+          name: product.name,
+          quantity: product.quantity,
+          price: product.price
+        });
       }
-    };
-    updateButtonsVisibility();
-  });
 
-  checkoutButton.addEventListener('click', () => {
-    const cartItems = [];
-
-    // Перебираем товары в корзине и добавляем информацию о каждом товаре
-    for (const productId in cart) {
-      const product = cart[productId];
-      cartItems.push({
-        id: productId,
-        name: product.name,
-        quantity: product.quantity,
-        price: product.price
-      });
-    }
-
-    // Отправляем информацию о корзине через Telegram
-    const data = {
-      cart: cartItems,
-    };
-    alert('Пшёл от сюда! Ещё раз увижу тебя тут, миллион вирусов в телефон закину!')
-    tg.sendData(JSON.stringify(data));
-    tg.close();
-  });
+      const data = {
+        cart: cartItems,
+      };
+      alert('Пшёл отсюда! Ещё раз увижу тебя тут, миллион вирусов в телефон закину!')
+      tg.sendData(JSON.stringify(data));
+      tg.close();
+    });
   </script>
 </body>
 </html>
