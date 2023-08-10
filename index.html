@@ -95,6 +95,31 @@
     border-radius: 5px;
     font-size: 14px;
   }
+
+  .quantity-input {
+    width: 40px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .checkout-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .checkout-button:hover {
+    background-color: #cc0000;
+  }
 </style>
 <title>Мобильный магазин</title>
 </head>
@@ -172,9 +197,16 @@
       <button class="buy-button">Купить</button>
     </div>
 
+
+    <button class="checkout-button" id="checkout-button">Оформить заказ</button>
   </div>
 
-<script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+    tg.expand(); //расширяем на все окно
+
+    const checkoutButton = document.getElementById('checkout-button');
     const items = document.querySelectorAll('.item');
 
     items.forEach(item => {
@@ -219,8 +251,19 @@
           quantityControls.style.display = 'none';
         }
       };
-
       updateButtonsVisibility();
+    });
+
+
+    checkoutButton.addEventListener('click', () => {
+      alert("Иди отсюда, пёс!!!!");
+      let data = {
+        name: '',
+        surname: ''
+      }
+
+      tg.sendData(JSON.stringify(data));
+      tg.close();
     });
   </script>
 </body>
