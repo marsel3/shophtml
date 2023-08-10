@@ -87,6 +87,14 @@
     font-size: 16px;
     margin: 0 10px;
   }
+  .quantity-input {
+    width: 40px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
 </style>
 <title>Мобильный магазин</title>
 </head>
@@ -98,7 +106,7 @@
       <p>Цена: $10</p>
       <div class="quantity-controls" style="display: none;">
         <button class="plus-button">+</button>
-        <span class="quantity-display">0</span>
+        <input type="number" class="quantity-input" value="0" min="0">
         <button class="minus-button">-</button>
       </div>
       <button class="buy-button">Купить</button>
@@ -110,7 +118,7 @@
       <p>Цена: $10</p>
       <div class="quantity-controls" style="display: none;">
         <button class="plus-button">+</button>
-        <span class="quantity-display">0</span>
+        <input type="number" class="quantity-input" value="0" min="0">
         <button class="minus-button">-</button>
       </div>
       <button class="buy-button">Купить</button>
@@ -122,7 +130,7 @@
       <p>Цена: $17</p>
       <div class="quantity-controls" style="display: none;">
         <button class="plus-button">+</button>
-        <span class="quantity-display">0</span>
+        <input type="number" class="quantity-input" value="0" min="0"> 
         <button class="minus-button">-</button>
       </div>
       <button class="buy-button">Купить</button>
@@ -134,7 +142,7 @@
       <p>Цена: $10</p>
       <div class="quantity-controls" style="display: none;">
         <button class="plus-button">+</button>
-        <span class="quantity-display">0</span>
+        <input type="number" class="quantity-input" value="0" min="0">  
         <button class="minus-button">-</button>
       </div>
       <button class="buy-button">Купить</button>
@@ -146,7 +154,7 @@
       <p>Цена: $4</p>
       <div class="quantity-controls" style="display: none;">
         <button class="plus-button">+</button>
-        <span class="quantity-display">0</span>
+        <input type="number" class="quantity-input" value="0" min="0">
         <button class="minus-button">-</button>
       </div>
       <button class="buy-button">Купить</button>
@@ -158,7 +166,7 @@
       <p>Цена: $17</p>
       <div class="quantity-controls" style="display: none;">
         <button class="plus-button">+</button>
-        <span class="quantity-display">0</span>
+        <input type="number" class="quantity-input" value="0" min="0">
         <button class="minus-button">-</button>
       </div>
       <button class="buy-button">Купить</button>
@@ -166,34 +174,39 @@
 
   </div>
 
-  <script>
+<script>
     const items = document.querySelectorAll('.item');
 
     items.forEach(item => {
       const buyButton = item.querySelector('.buy-button');
       const plusButton = item.querySelector('.plus-button');
       const minusButton = item.querySelector('.minus-button');
-      const quantityDisplay = item.querySelector('.quantity-display');
+      const quantityInput = item.querySelector('.quantity-input');
       const quantityControls = item.querySelector('.quantity-controls');
       let quantity = 0;
 
       plusButton.addEventListener('click', () => {
         quantity++;
-        quantityDisplay.textContent = quantity;
+        quantityInput.value = quantity;
         updateButtonsVisibility();
       });
 
       minusButton.addEventListener('click', () => {
         if (quantity > 0) {
           quantity--;
-          quantityDisplay.textContent = quantity;
+          quantityInput.value = quantity;
           updateButtonsVisibility();
         }
       });
 
       buyButton.addEventListener('click', () => {
         quantity = 1;
-        quantityDisplay.textContent = quantity;
+        quantityInput.value = quantity;
+        updateButtonsVisibility();
+      });
+
+      quantityInput.addEventListener('input', () => {
+        quantity = parseInt(quantityInput.value) || 0;
         updateButtonsVisibility();
       });
 
