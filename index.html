@@ -7,75 +7,100 @@
   body {
     font-family: Arial, sans-serif;
     margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 390px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #f4f4f4;
   }
 
-  .product {
-    width: 45%;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .item {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
     padding: 10px;
-    margin: 10px;
-    display: inline-block;
-    vertical-align: top;
-    text-align: center; 
+    box-sizing: border-box;
+    position: relative; /* Added for positioning */
   }
 
-  .product img {
+  .item img {
     max-width: 100%;
     height: auto;
   }
 
-  .product-title {
-    font-weight: bold;
-    margin-top: 8px;
+  .item h3 {
+    margin: 10px 0;
+    font-size: 16px;
   }
 
-  .product-price {
-    color: #e74c3c;
-    margin-top: 4px;
+  .item p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+
+  .item .buy-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .buy-button:hover {
+    background-color: #00c4ff;
+  }
+
+  .item .quantity-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 </style>
-
 <title>Мобильный магазин</title>
 </head>
 <body>
-  <div class="product" id="product1">
-    <img src="1.jpg" alt="Товар 1">
-    <div class="product-title">Товар 1</div>
-    <div class="product-price">$10.00</div>
+  <div class="container">
+    <div class="item" id="product1">
+      <img src="1.jpg" alt="Товар 1">
+      <h3>Товар 1</h3>
+      <p>Цена: $10</p>
+      <button class="buy-button">Купить</button>
+    </div>
+    <div class="item" id="product2">
+      <img src="1.jpg" alt="Товар 2">
+      <h3>Товар 2</h3>
+      <p>Цена: $15</p>
+      <button class="buy-button">Купить</button>
+    </div>
+        <div class="item" id="product3">
+      <img src="1.jpg" alt="Товар 3">
+      <h3>Товар 3</h3>
+      <p>Цена: $7</p>
+      <button class="buy-button">Купить</button>
+    </div>
+    <div class="item" id="product4">
+      <img src="1.jpg" alt="Товар 4">
+      <h3>Товар 4</h3>
+      <p>Цена: 12$</p>
+      <button class="buy-button">Купить</button>
+    </div>
+    <!-- Repeat similar blocks for other products -->
   </div>
 
-  <div class="product" id="product2">
-    <img src="1.jpg" alt="Товар 2">
-    <div class="product-title">Товар 2</div>
-    <div class="product-price">$15.00</div>
-  </div>
-
-  <div class="product" id="product3">
-    <img src="1.jpg" alt="Товар 3">
-    <div class="product-title">Товар 3</div>
-    <div class="product-price">$20.00</div>
-  </div>
-
-  <div class="product" id="product4">
-    <img src="1.jpg" alt="Товар 4">
-    <div class="product-title">Товар 4</div>
-    <div class="product-price">$25.00</div>
-  </div>
-
-  <div class="product" id="product5">
-    <img src="1.jpg" alt="Товар 5">
-    <div class="product-title">Товар 5</div>
-    <div class="product-price">$30.00</div>
-  </div>
-
-  <div class="product" id="product6">
-    <img src="1.jpg" alt="Товар 6">
-    <div class="product-title">Товар 6</div>
-    <div class="product-price">$35.00</div>
-  </div>
+  <script>
+  </script>
 </body>
 </html>
