@@ -209,14 +209,19 @@
 
     const checkoutButton = document.getElementById('checkout-button');
     const items = document.querySelectorAll('.item');
+  const cart = {}; // Объект для хранения состава корзины
 
     items.forEach(item => {
-      const buyButton = item.querySelector('.buy-button');
-      const plusButton = item.querySelector('.plus-button');
-      const minusButton = item.querySelector('.minus-button');
-      const quantityInput = item.querySelector('.quantity-input');
-      const quantityControls = item.querySelector('.quantity-controls');
-      let quantity = 0;
+    const buyButton = item.querySelector('.buy-button');
+    const plusButton = item.querySelector('.plus-button');
+    const minusButton = item.querySelector('.minus-button');
+    const quantityInput = item.querySelector('.quantity-input');
+    const quantityControls = item.querySelector('.quantity-controls');
+    const itemId = item.id;
+    const itemName = item.querySelector('h3').innerText;
+
+    let quantity = 0;
+
 
       plusButton.addEventListener('click', () => {
         quantity++;
@@ -243,29 +248,44 @@
         updateButtonsVisibility();
       });
 
-      const updateButtonsVisibility = () => {
-        if (quantity > 0) {
-          buyButton.style.display = 'none';
-          quantityControls.style.display = 'flex';
-        } else {
-          buyButton.style.display = 'inline';
-          quantityControls.style.display = 'none';
-        }
-      };
-      updateButtonsVisibility();
-    });
-
-
-    checkoutButton.addEventListener('click', () => {
-      alert("Иди отсюда, пёс!!!!");
-      let data = {
-        name: '',
-        surname: ''
+    const updateButtonsVisibility = () => {
+      if (quantity > 0) {
+        buyButton.style.display = 'none';
+        quantityControls.style.display = 'flex';
+        cart[itemId] = {
+          name: itemName,
+          quantity: quantity,
+        };
+      } else {
+        buyButton.style.display = 'inline';
+        quantityControls.style.display = 'none';
+        delete cart[itemId];
       }
+    };
+    updateButtonsVisibility();
+  });
 
-      tg.sendData(JSON.stringify(data));
-      tg.close();
-    });
+  checkoutButton.addEventListener('click', () => {
+    const cartItems = [];
+
+    // Перебираем товары в корзине и добавляем информацию о каждом товаре
+    for (const productId in cart) {
+      const product = cart[productId];
+      cartItems.push({
+        id: productId,
+        name: product.name,
+        quantity: product.quantity,
+      });
+    }
+
+    // Отправляем информацию о корзине через Telegram
+    const data = {
+      cart: cartItems,
+    };
+    alert('Пшёл от сюда! Ещё раз увижу тебя тут, миллион вирусов в телефон закину!')
+    tg.sendData(JSON.stringify(data));
+    tg.close();
+  });
   </script>
 </body>
 </html>
