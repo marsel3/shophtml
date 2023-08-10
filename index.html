@@ -43,7 +43,6 @@
     font-size: 14px;
   }
 
-
   .item .buy-button {
     display: block;
     width: 100%;
@@ -64,9 +63,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  }
+
+  /* Стили для кнопок + и - */
+  .plus-button,
+  .minus-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .plus-button:hover,
+  .minus-button:hover {
+    background-color: #00c4ff;
+  }
+
+  .quantity-display {
+    font-size: 16px;
+    margin: 0 10px;
   }
 </style>
 <title>Мобильный магазин</title>
@@ -77,30 +96,119 @@
       <img src="1.jpg" alt="Товар 1">
       <h3>Товар 1</h3>
       <p>Цена: $10</p>
+      <div class="quantity-controls" style="display: none;">
+        <button class="plus-button">+</button>
+        <span class="quantity-display">0</span>
+        <button class="minus-button">-</button>
+      </div>
       <button class="buy-button">Купить</button>
     </div>
+
     <div class="item" id="product2">
       <img src="1.jpg" alt="Товар 2">
       <h3>Товар 2</h3>
-      <p>Цена: $15</p>
+      <p>Цена: $10</p>
+      <div class="quantity-controls" style="display: none;">
+        <button class="plus-button">+</button>
+        <span class="quantity-display">0</span>
+        <button class="minus-button">-</button>
+      </div>
       <button class="buy-button">Купить</button>
     </div>
-        <div class="item" id="product3">
+
+    <div class="item" id="product3">
       <img src="1.jpg" alt="Товар 3">
       <h3>Товар 3</h3>
-      <p>Цена: $7</p>
+      <p>Цена: $17</p>
+      <div class="quantity-controls" style="display: none;">
+        <button class="plus-button">+</button>
+        <span class="quantity-display">0</span>
+        <button class="minus-button">-</button>
+      </div>
       <button class="buy-button">Купить</button>
     </div>
-    <div class="item" id="product4">
+
+        <div class="item" id="product4">
       <img src="1.jpg" alt="Товар 4">
       <h3>Товар 4</h3>
-      <p>Цена: 12$</p>
+      <p>Цена: $10</p>
+      <div class="quantity-controls" style="display: none;">
+        <button class="plus-button">+</button>
+        <span class="quantity-display">0</span>
+        <button class="minus-button">-</button>
+      </div>
       <button class="buy-button">Купить</button>
     </div>
-    <!-- Repeat similar blocks for other products -->
+
+    <div class="item" id="product5">
+      <img src="1.jpg" alt="Товар 5">
+      <h3>Товар 5</h3>
+      <p>Цена: $4</p>
+      <div class="quantity-controls" style="display: none;">
+        <button class="plus-button">+</button>
+        <span class="quantity-display">0</span>
+        <button class="minus-button">-</button>
+      </div>
+      <button class="buy-button">Купить</button>
+    </div>
+
+    <div class="item" id="product6">
+      <img src="1.jpg" alt="Товар 6">
+      <h3>Товар 6</h3>
+      <p>Цена: $17</p>
+      <div class="quantity-controls" style="display: none;">
+        <button class="plus-button">+</button>
+        <span class="quantity-display">0</span>
+        <button class="minus-button">-</button>
+      </div>
+      <button class="buy-button">Купить</button>
+    </div>
+
   </div>
 
   <script>
+    const items = document.querySelectorAll('.item');
+
+    items.forEach(item => {
+      const buyButton = item.querySelector('.buy-button');
+      const plusButton = item.querySelector('.plus-button');
+      const minusButton = item.querySelector('.minus-button');
+      const quantityDisplay = item.querySelector('.quantity-display');
+      const quantityControls = item.querySelector('.quantity-controls');
+      let quantity = 0;
+
+      plusButton.addEventListener('click', () => {
+        quantity++;
+        quantityDisplay.textContent = quantity;
+        updateButtonsVisibility();
+      });
+
+      minusButton.addEventListener('click', () => {
+        if (quantity > 0) {
+          quantity--;
+          quantityDisplay.textContent = quantity;
+          updateButtonsVisibility();
+        }
+      });
+
+      buyButton.addEventListener('click', () => {
+        quantity = 1;
+        quantityDisplay.textContent = quantity;
+        updateButtonsVisibility();
+      });
+
+      const updateButtonsVisibility = () => {
+        if (quantity > 0) {
+          buyButton.style.display = 'none';
+          quantityControls.style.display = 'flex';
+        } else {
+          buyButton.style.display = 'inline';
+          quantityControls.style.display = 'none';
+        }
+      };
+
+      updateButtonsVisibility();
+    });
   </script>
 </body>
 </html>
