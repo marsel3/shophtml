@@ -34,7 +34,7 @@
     height: auto;
   }
 
-  .item h3 {
+  .item .product-title {
     margin: 10px 0;
     font-size: 16px;
   }
@@ -127,9 +127,9 @@
 <body>
   <div class="container">
     <div class="item" id="product1">
-      <img src="1.jpg" alt="Товар 1">
-      <h3>Товар 1</h3>
-      <p>Цена: $10</p>
+      <img src="1.jpg" alt="Товар 2"> 
+      <h3 class="product-title">Товар 1</h3>
+      <p>Цена: $<span class="product-price">10</span></p>
       <div class="quantity-controls" style="display: none;">
         <button class="minus-button">-</button>
         <input type="number" class="quantity-input" value="0" min="0">
@@ -140,8 +140,8 @@
 
     <div class="item" id="product2">
       <img src="1.jpg" alt="Товар 2">
-      <h3>Товар 2</h3>
-      <p>Цена: $10</p>
+      <h3 class="product-title">Товар 2</h3>
+      <p>Цена: $<span class="product-price">20</span></p>
       <div class="quantity-controls" style="display: none;">
         <button class="minus-button">-</button>
         <input type="number" class="quantity-input" value="0" min="0">
@@ -152,8 +152,8 @@
 
     <div class="item" id="product3">
       <img src="1.jpg" alt="Товар 3">
-      <h3>Товар 3</h3>
-      <p>Цена: $17</p>
+      <h3 class="product-title">Товар 3</h3>
+      <p>Цена: $<span class="product-price">15</span></p>
       <div class="quantity-controls" style="display: none;">
         <button class="minus-button">-</button>
         <input type="number" class="quantity-input" value="0" min="0">
@@ -164,8 +164,8 @@
 
         <div class="item" id="product4">
       <img src="1.jpg" alt="Товар 4">
-      <h3>Товар 4</h3>
-      <p>Цена: $10</p>
+      <h3 class="product-title">Товар 4</h3>
+      <p>Цена: $<span class="product-price">10</span></p>
       <div class="quantity-controls" style="display: none;">
         <button class="minus-button">-</button>
         <input type="number" class="quantity-input" value="0" min="0">
@@ -176,8 +176,8 @@
 
     <div class="item" id="product5">
       <img src="1.jpg" alt="Товар 5">
-      <h3>Товар 5</h3>
-      <p>Цена: $4</p>
+      <h3 class="product-title">Товар 5</h3>
+      <p>Цена: $<span class="product-price">25</span></p>
       <div class="quantity-controls" style="display: none;">
         <button class="minus-button">-</button>
         <input type="number" class="quantity-input" value="0" min="0">
@@ -188,8 +188,8 @@
 
     <div class="item" id="product6">
       <img src="1.jpg" alt="Товар 6">
-      <h3>Товар 6</h3>
-      <p>Цена: $17</p>
+      <h3 class="product-title">Товар 6</h3>
+      <p>Цена: $<span class="product-price">5</span></p>
       <div class="quantity-controls" style="display: none;">
         <button class="minus-button">-</button>
         <input type="number" class="quantity-input" value="0" min="0">
@@ -209,7 +209,7 @@
 
     const checkoutButton = document.getElementById('checkout-button');
     const items = document.querySelectorAll('.item');
-  const cart = {}; // Объект для хранения состава корзины
+    const cart = {}; // Объект для хранения состава корзины
 
     items.forEach(item => {
     const buyButton = item.querySelector('.buy-button');
@@ -218,7 +218,7 @@
     const quantityInput = item.querySelector('.quantity-input');
     const quantityControls = item.querySelector('.quantity-controls');
     const itemId = item.id;
-    const itemName = item.querySelector('h3').innerText;
+    const itemName = item.querySelector('product-title').innerText;
 
     let quantity = 0;
 
@@ -255,6 +255,7 @@
         cart[itemId] = {
           name: itemName,
           quantity: quantity,
+          price: it
         };
       } else {
         buyButton.style.display = 'inline';
